@@ -2,13 +2,10 @@ import platform.posix.fflush
 import platform.posix.fprintf
 
 fun main(args: Array<String>) {
-  val string = if (args.isEmpty()) {
-    readLine().orEmpty()
-  } else {
-    when {
+  val string = when {
+      args.isEmpty() -> readLine().orEmpty()
       args.size == 1 -> args[0]
       else -> args.joinToString(" ")
-    }
   }
 
   // Define map for coding
@@ -23,7 +20,7 @@ fun main(args: Array<String>) {
     string.matches(Regex("([Oo0k\\s])+")) -> // Decode
       string.dropLast(1).split('0').map { codeMap.getKey(it) }.joinToString("")
     else -> // Encode
-      string.map { codeMap.getOrElse(it.toLowerCase().toString()) {""}}.joinToString("").plus("k")
+      string.map { codeMap.getOrElse(it.toLowerCase().toString()) {""}}.joinToString("0").plus("k")
   }
 
   println(output)
