@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
 
   val output = when {
     string.matches(Regex("([Oo0k\\s])+")) -> // Decode
-      string.dropLast(1).split('0').map { codeMap.getKey(it) }.joinToString("")
+      string.trimEnd('k').split('0').map { codeMap.getKey(it) }.joinToString("")
     else -> // Encode
       string.map { codeMap.getOrElse(it.toLowerCase().toString()) {""}}.joinToString("0").plus("k")
   }
